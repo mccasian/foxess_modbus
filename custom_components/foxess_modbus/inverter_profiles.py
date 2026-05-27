@@ -431,6 +431,14 @@ _INVERTER_PROFILES_LIST = [
         versions={None: Inv.H3_PRE180},
         special_registers=H3_REGISTERS,
     ),
+    # P3 series
+    # Seen as P3-5.0-SH from Modbus model register; some references use P3-HS naming
+    InverterModelProfile(InverterModel.P3_SH, r"^P3-([\d\.]+)-(?:SH|HS)$").add_connection_type(
+        ConnectionType.AUX,
+        RegisterType.HOLDING,
+        versions={None: Inv.H3_SMART},
+        special_registers=H3_SMART_REGISTERS,
+    ),
     # E.g. H3-Pro-20.0
     InverterModelProfile(InverterModel.H3_PRO, r"^H3-Pro-([\d\.]+)").add_connection_type(
         ConnectionType.AUX,

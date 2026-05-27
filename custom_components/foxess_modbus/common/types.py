@@ -54,6 +54,7 @@ class InverterModel(StrEnum):
     STAR_H3 = "STAR-H3"
     SOLAVITA_SP = "SOLAVITA-SP"
     ATRONIX_AX = "ATRONIX_AX"
+    P3_SH = "P3-SH"
     ENPAL_IX = "ENPAL_IX"
     ONE_KOMMA_FIVE = "1KOMMA5"
 
