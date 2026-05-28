@@ -49,6 +49,9 @@ BMS_CONNECT_STATE_ADDRESS = [
     ModbusAddressSpec(holding=31042, models=Inv.H3_SET),
 ]
 
+EXTENDED_PROTOCOL_HOLDING_MODELS = Inv.H1_G2_SET | Inv.KH_133 | Inv.H3_PRO_SET | Inv.H3_SMART | Inv.EVO
+EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS = Inv.KH_133 | Inv.H3_PRO_SET | Inv.H3_SMART | Inv.EVO
+
 
 def _version_entities() -> Iterable[EntityFactory]:
     # Named so that they sort together
@@ -2322,6 +2325,387 @@ def _inverter_entities() -> Iterable[EntityFactory]:
     )
 
 
+def _extended_protocol_entities() -> Iterable[EntityFactory]:
+    """Additional entities from the extended 39xxx/46xxx protocol register map."""
+
+    def _u16_sensor(
+        *,
+        key: str,
+        name: str,
+        address: int,
+        models: Inv,
+        device_class: SensorDeviceClass | None = None,
+        state_class: SensorStateClass | None = SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement: str | None = None,
+        scale: float | None = None,
+        round_to: float | None = None,
+        signed: bool = False,
+        validate: list[BaseValidator] | None = None,
+    ) -> EntityFactory:
+        return ModbusSensorDescription(
+            key=key,
+            addresses=[ModbusAddressesSpec(holding=[address], models=models)],
+            name=name,
+            device_class=device_class,
+            state_class=state_class,
+            native_unit_of_measurement=native_unit_of_measurement,
+            scale=scale,
+            round_to=round_to,
+            signed=signed,
+            validate=[] if validate is None else validate,
+        )
+
+    def _i32_sensor(
+        *,
+        key: str,
+        name: str,
+        address: int,
+        models: Inv,
+        device_class: SensorDeviceClass | None = None,
+        state_class: SensorStateClass | None = SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement: str | None = None,
+        scale: float | None = None,
+        round_to: float | None = None,
+        signed: bool = True,
+        validate: list[BaseValidator] | None = None,
+    ) -> EntityFactory:
+        return ModbusSensorDescription(
+            key=key,
+            addresses=[ModbusAddressesSpec(holding=[address + 1, address], models=models)],
+            name=name,
+            device_class=device_class,
+            state_class=state_class,
+            native_unit_of_measurement=native_unit_of_measurement,
+            scale=scale,
+            round_to=round_to,
+            signed=signed,
+            validate=[] if validate is None else validate,
+        )
+
+    yield _u16_sensor(
+        key="meter1_ct1_connect_state",
+        name="Meter1/CT1 Connect State",
+        address=38801,
+        models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+        validate=[Range(0, 1)],
+    )
+    for phase, address in (("r", 38802), ("s", 38804), ("t", 38806)):
+        yield _i32_sensor(
+            key=f"meter1_ct1_voltage_{phase}",
+            name=f"Meter1/CT1 Voltage {phase.upper()}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.VOLTAGE,
+            native_unit_of_measurement="V",
+            scale=0.1,
+            round_to=1,
+            validate=[Range(0, 300)],
+        )
+    for phase, address in (("r", 38808), ("s", 38810), ("t", 38812)):
+        yield _i32_sensor(
+            key=f"meter1_ct1_current_{phase}",
+            name=f"Meter1/CT1 Current {phase.upper()}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.CURRENT,
+            native_unit_of_measurement="A",
+            scale=0.001,
+            round_to=0.1,
+            validate=[Range(0, 100)],
+        )
+
+    yield _u16_sensor(
+        key="meter2_ct2_connect_state",
+        name="Meter2/CT2 Connect State",
+        address=38901,
+        models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+        validate=[Range(0, 1)],
+    )
+    for phase, address in (("r", 38902), ("s", 38904), ("t", 38906)):
+        yield _i32_sensor(
+            key=f"meter2_ct2_voltage_{phase}",
+            name=f"Meter2/CT2 Voltage {phase.upper()}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.VOLTAGE,
+            native_unit_of_measurement="V",
+            scale=0.1,
+            round_to=1,
+            validate=[Range(0, 300)],
+        )
+    for phase, address in (("r", 38908), ("s", 38910), ("t", 38912)):
+        yield _i32_sensor(
+            key=f"meter2_ct2_current_{phase}",
+            name=f"Meter2/CT2 Current {phase.upper()}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.CURRENT,
+            native_unit_of_measurement="A",
+            scale=0.001,
+            round_to=0.1,
+            validate=[Range(0, 100)],
+        )
+
+    for key_suffix, name_suffix, address in (
+        ("", "", 38922),
+        ("_r", " R", 38924),
+        ("_s", " S", 38926),
+        ("_t", " T", 38928),
+    ):
+        yield _i32_sensor(
+            key=f"ct2_meter_reactive{key_suffix}",
+            name=f"CT2 Meter Reactive{name_suffix}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement="kvar",
+            scale=0.0001,
+            round_to=0.01,
+            validate=[Range(-100, 100)],
+        )
+
+    for key_suffix, name_suffix, address in (
+        ("", "", 38930),
+        ("_r", " R", 38932),
+        ("_s", " S", 38934),
+        ("_t", " T", 38936),
+    ):
+        yield _i32_sensor(
+            key=f"ct2_meter_apparent{key_suffix}",
+            name=f"CT2 Meter Apparent{name_suffix}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement="kVA",
+            scale=0.0001,
+            round_to=0.01,
+            validate=[Range(-100, 100)],
+        )
+
+    for key_suffix, name_suffix, address in (
+        ("", "", 38938),
+        ("_r", " R", 38940),
+        ("_s", " S", 38942),
+        ("_t", " T", 38944),
+    ):
+        yield _i32_sensor(
+            key=f"ct2_meter_pf{key_suffix}",
+            name=f"CT2 Meter Power Factor{name_suffix}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            scale=0.00001,
+            round_to=0.001,
+            validate=[Range(-1, 1)],
+        )
+
+    yield _i32_sensor(
+        key="ct2_meter_frequency",
+        name="CT2 Meter Frequency",
+        address=38946,
+        models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+        device_class=SensorDeviceClass.FREQUENCY,
+        native_unit_of_measurement="Hz",
+        scale=0.01,
+        round_to=0.1,
+        signed=False,
+        validate=[Range(0, 60)],
+    )
+
+    yield _i32_sensor(
+        key="protocol_version_raw",
+        name="Protocol Version (Raw)",
+        address=39000,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        signed=False,
+    )
+    yield _u16_sensor(
+        key="model_id",
+        name="Model ID",
+        address=39050,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        signed=False,
+    )
+    yield _u16_sensor(
+        key="number_of_strings",
+        name="Number of Strings",
+        address=39051,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        signed=False,
+    )
+    yield _u16_sensor(
+        key="number_of_mppts",
+        name="Number of MPPTs",
+        address=39052,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        signed=False,
+    )
+    for key, name, address, unit in (
+        ("rated_power", "Rated Power (Pn)", 39053, "kW"),
+        ("max_active_power", "Maximum Active Power (Pmax)", 39055, "kW"),
+        ("max_apparent_power", "Maximum Apparent Power (Smax)", 39057, "kVA"),
+        ("max_reactive_power_export", "Maximum Reactive Power (Export)", 39059, "kvar"),
+        ("max_reactive_power_import", "Maximum Reactive Power (Import)", 39061, "kvar"),
+    ):
+        yield _i32_sensor(
+            key=key,
+            name=name,
+            address=address,
+            models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement=unit,
+            scale=0.001,
+            round_to=0.01,
+            validate=[Range(0, 100)],
+        )
+
+    yield _i32_sensor(
+        key="pv_input_power_total",
+        name="PV Input Power Total",
+        address=39118,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="kW",
+        scale=0.001,
+        round_to=0.01,
+        validate=[Range(0, 100)],
+    )
+    yield _u16_sensor(
+        key="grid_power_factor",
+        name="Grid Power Factor",
+        address=39138,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        scale=0.001,
+        round_to=0.001,
+        validate=[Range(-1, 1)],
+    )
+    yield _i32_sensor(
+        key="cumulative_power_generation",
+        name="Cumulative Power Generation",
+        address=39149,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        device_class=SensorDeviceClass.ENERGY,
+        state_class=SensorStateClass.TOTAL,
+        native_unit_of_measurement="kWh",
+        scale=0.01,
+        signed=False,
+        validate=[Min(0)],
+    )
+    yield _i32_sensor(
+        key="power_generation_today",
+        name="Power Generation Today",
+        address=39151,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        device_class=SensorDeviceClass.ENERGY,
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        native_unit_of_measurement="kWh",
+        scale=0.01,
+        signed=False,
+        validate=[Range(0, 1000)],
+    )
+    yield _i32_sensor(
+        key="energy_storage_module_1_power",
+        name="Energy Storage Module 1 Power",
+        address=39162,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="kW",
+        scale=0.001,
+        round_to=0.01,
+        validate=[Range(-100, 100)],
+    )
+
+    yield _i32_sensor(
+        key="inv_combined_apparent_power",
+        name="Inverter Combined Apparent Power",
+        address=39270,
+        models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="kVA",
+        scale=0.001,
+        round_to=0.01,
+        validate=[Range(-100, 100)],
+    )
+    for phase, address in (("r", 39272), ("s", 39273), ("t", 39274)):
+        yield _u16_sensor(
+            key=f"inv_frequency_{phase}",
+            name=f"Inverter Frequency {phase.upper()}",
+            address=address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.FREQUENCY,
+            native_unit_of_measurement="Hz",
+            scale=0.01,
+            round_to=0.1,
+            signed=False,
+            validate=[Range(0, 60)],
+        )
+    yield _i32_sensor(
+        key="available_import_power",
+        name="Available Import Power",
+        address=39275,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="kW",
+        scale=0.001,
+        round_to=0.01,
+        validate=[Range(0, 100)],
+    )
+    yield _i32_sensor(
+        key="available_export_power",
+        name="Available Export Power",
+        address=39277,
+        models=EXTENDED_PROTOCOL_HOLDING_MODELS,
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="kW",
+        scale=0.001,
+        round_to=0.01,
+        validate=[Range(0, 100)],
+    )
+
+    for index, voltage_address, current_address, power_address in (
+        (1, 39327, 39328, 39329),
+        (2, 39331, 39332, 39333),
+        (3, 39335, 39336, 39337),
+    ):
+        yield _u16_sensor(
+            key=f"mppt{index}_voltage",
+            name=f"MPPT{index} Voltage",
+            address=voltage_address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.VOLTAGE,
+            native_unit_of_measurement="V",
+            scale=0.1,
+            round_to=1,
+            validate=[Range(0, 1000)],
+        )
+        yield _u16_sensor(
+            key=f"mppt{index}_current",
+            name=f"MPPT{index} Current",
+            address=current_address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.CURRENT,
+            native_unit_of_measurement="A",
+            scale=0.01,
+            round_to=0.1,
+            validate=[Range(0, 100)],
+        )
+        yield _i32_sensor(
+            key=f"mppt{index}_power",
+            name=f"MPPT{index} Power",
+            address=power_address,
+            models=EXTENDED_PROTOCOL_THREE_PHASE_HOLDING_MODELS,
+            device_class=SensorDeviceClass.POWER,
+            state_class=SensorStateClass.MEASUREMENT,
+            native_unit_of_measurement="kW",
+            scale=0.001,
+            round_to=0.01,
+            validate=[Range(0, 100)],
+        )
+
+
 def _bms_entities() -> Iterable[EntityFactory]:
     def _inner(
         index: int | None,
@@ -2776,12 +3160,12 @@ def _configuration_entities() -> Iterable[EntityFactory]:
         validate=[Range(0, 100)],
     )
 
-    # Register 46616+46617: Export Power Limit (I32 in watts, KH_133 only)
+    # Register 46616+46617: Export Power Limit (I32 in watts)
     # Address list order [46617, 46616]: low-word register first (controller.read() convention)
     yield ModbusSensorDescription(
         key="export_power_limit",
         addresses=[
-            ModbusAddressesSpec(holding=[46617, 46616], models=Inv.KH_133),
+            ModbusAddressesSpec(holding=[46617, 46616], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
         ],
         name="Export Power Limit",
         device_class=SensorDeviceClass.POWER,
@@ -2793,7 +3177,7 @@ def _configuration_entities() -> Iterable[EntityFactory]:
     yield ModbusNumberDescription(
         key="export_power_limit",
         addresses=[
-            ModbusAddressesSpec(holding=[46617, 46616], models=Inv.KH_133),
+            ModbusAddressesSpec(holding=[46617, 46616], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
         ],
         name="Export Power Limit",
         mode=NumberMode.BOX,
@@ -2806,12 +3190,12 @@ def _configuration_entities() -> Iterable[EntityFactory]:
         validate=[Range(0, 99999)],
     )
 
-    # Register 46501+46502: Import Power Limit (I32 in watts, KH_133 only)
+    # Register 46501+46502: Import Power Limit (I32 in watts)
     # Address list order [46502, 46501]: low-word register first (controller.read() convention)
     yield ModbusSensorDescription(
         key="import_power_limit",
         addresses=[
-            ModbusAddressesSpec(holding=[46502, 46501], models=Inv.KH_133),
+            ModbusAddressesSpec(holding=[46502, 46501], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
         ],
         name="Import Power Limit",
         device_class=SensorDeviceClass.POWER,
@@ -2823,7 +3207,7 @@ def _configuration_entities() -> Iterable[EntityFactory]:
     yield ModbusNumberDescription(
         key="import_power_limit",
         addresses=[
-            ModbusAddressesSpec(holding=[46502, 46501], models=Inv.KH_133),
+            ModbusAddressesSpec(holding=[46502, 46501], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
         ],
         name="Import Power Limit",
         mode=NumberMode.BOX,
@@ -2834,6 +3218,115 @@ def _configuration_entities() -> Iterable[EntityFactory]:
         device_class=NumberDeviceClass.POWER,
         icon="mdi:transmission-tower-import",
         validate=[Range(0, 99999)],
+    )
+
+    yield ModbusSensorDescription(
+        key="threshold_soc",
+        addresses=[
+            ModbusAddressesSpec(holding=[46503], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Threshold SoC",
+        device_class=SensorDeviceClass.BATTERY,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="%",
+        signed=False,
+        validate=[Range(0, 100)],
+    )
+    yield ModbusNumberDescription(
+        key="threshold_soc",
+        addresses=[
+            ModbusAddressSpec(holding=46503, models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Threshold SoC",
+        mode=NumberMode.BOX,
+        native_min_value=0,
+        native_max_value=100,
+        native_step=1,
+        native_unit_of_measurement="%",
+        device_class=NumberDeviceClass.BATTERY,
+        validate=[Range(0, 100)],
+    )
+
+    # Register 46504+46505: Export Peak Limit (I32 in watts)
+    # Address list order [46505, 46504]: low-word register first (controller.read() convention)
+    yield ModbusSensorDescription(
+        key="export_peak_limit",
+        addresses=[
+            ModbusAddressesSpec(holding=[46505, 46504], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Export Peak Limit",
+        device_class=SensorDeviceClass.POWER,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="W",
+        icon="mdi:transmission-tower-export",
+        validate=[Range(0, 99999)],
+    )
+    yield ModbusNumberDescription(
+        key="export_peak_limit",
+        addresses=[
+            ModbusAddressesSpec(holding=[46505, 46504], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Export Peak Limit",
+        mode=NumberMode.BOX,
+        native_min_value=0,
+        native_max_value=99999,
+        native_step=1,
+        native_unit_of_measurement="W",
+        device_class=NumberDeviceClass.POWER,
+        icon="mdi:transmission-tower-export",
+        validate=[Range(0, 99999)],
+    )
+
+    yield ModbusSensorDescription(
+        key="import_current_limit",
+        addresses=[
+            ModbusAddressesSpec(holding=[46618], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Import Current Limit",
+        device_class=SensorDeviceClass.CURRENT,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="A",
+        validate=[Range(0, 200)],
+    )
+    yield ModbusNumberDescription(
+        key="import_current_limit",
+        addresses=[
+            ModbusAddressSpec(holding=46618, models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Import Current Limit",
+        mode=NumberMode.BOX,
+        native_min_value=0,
+        native_max_value=200,
+        native_step=1,
+        native_unit_of_measurement="A",
+        device_class=NumberDeviceClass.CURRENT,
+        validate=[Range(0, 200)],
+    )
+
+    yield ModbusSensorDescription(
+        key="export_current_limit",
+        addresses=[
+            ModbusAddressesSpec(holding=[46619], models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Export Current Limit",
+        device_class=SensorDeviceClass.CURRENT,
+        state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement="A",
+        validate=[Range(0, 200)],
+    )
+    yield ModbusNumberDescription(
+        key="export_current_limit",
+        addresses=[
+            ModbusAddressSpec(holding=46619, models=EXTENDED_PROTOCOL_HOLDING_MODELS),
+        ],
+        name="Export Current Limit",
+        mode=NumberMode.BOX,
+        native_min_value=0,
+        native_max_value=200,
+        native_step=1,
+        native_unit_of_measurement="A",
+        device_class=NumberDeviceClass.CURRENT,
+        validate=[Range(0, 200)],
     )
 
 
@@ -2844,6 +3337,7 @@ ENTITIES: list[EntityFactory] = sorted(
         _h1_current_voltage_power_entities(),
         _h3_current_voltage_power_entities(),
         _inverter_entities(),
+        _extended_protocol_entities(),
         _bms_entities(),
         _configuration_entities(),
         (description for x in CHARGE_PERIODS for description in x.entity_descriptions),

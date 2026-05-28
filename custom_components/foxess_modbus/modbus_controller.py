@@ -491,6 +491,8 @@ class ModbusController(EntityController, UnloadController):
             )
 
         read_values: list[tuple[int, Iterable[int | None]]] = []
+        any_reads_succeeded = False
+        first_non_illegal_error: ModbusClientFailedError | None = None
 
         read_ranges = self._create_read_ranges(
             self._max_read, is_initial_connection=self._connection_state != ConnectionState.CONNECTED
@@ -511,10 +513,23 @@ class ModbusController(EntityController, UnloadController):
                     self._slave,
                 )
                 read_values.append((start_address, reads))
+                any_reads_succeeded = True
 
             except ModbusClientFailedError as ex:
                 if not _is_illegal_address(ex):
-                    raise
+                    if first_non_illegal_error is None:
+                        first_non_illegal_error = ex
+                    _LOGGER.warning(
+                        "Modbus error when polling %s %s for range (%s, %s): %s. Skipping this range for this poll.",
+                        self._client,
+                        self._slave,
+                        start_address,
+                        num_reads,
+                        ex.response,
+                    )
+                    # Record None for this range so entities become unavailable instead of keeping stale values.
+                    read_values.append((start_address, [None] * num_reads))
+                    continue
 
                 _LOGGER.debug(
                     "IllegalAddress when polling %s %s: %s. Trying each register individually...",
@@ -539,19 +554,33 @@ class ModbusController(EntityController, UnloadController):
                         )
                         assert len(read) == 1
                         read_values.append((address, read))
+                        any_reads_succeeded = True
                     except ModbusClientFailedError as ex:
-                        if not _is_illegal_address(ex):
-                            raise
+                        if _is_illegal_address(ex):
+                            _LOGGER.warning(
+                                "%s %s: register %s is invalid",
+                                self._client,
+                                self._slave,
+                                address,
+                            )
+                            self._detected_invalid_ranges.add(address)
+                        else:
+                            if first_non_illegal_error is None:
+                                first_non_illegal_error = ex
+                            _LOGGER.warning(
+                                "Modbus error when polling %s %s for register %s: %s. Skipping this register for this poll.",
+                                self._client,
+                                self._slave,
+                                address,
+                                ex.response,
+                            )
 
-                        _LOGGER.warning(
-                            "%s %s: register %s is invalid",
-                            self._client,
-                            self._slave,
-                            address,
-                        )
-                        self._detected_invalid_ranges.add(address)
                         # Record None at this address, so the sensor gets an 'Unavailable' value
                         read_values.append((address, [None]))
+
+        # Keep existing disconnect behaviour when nothing could be read at all.
+        if first_non_illegal_error is not None and not any_reads_succeeded:
+            raise first_non_illegal_error
 
         return read_values
 

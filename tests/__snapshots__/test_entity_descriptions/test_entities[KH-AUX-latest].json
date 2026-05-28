@@ -11,6 +11,28 @@
   },
   {
     "addresses": [
+      39278,
+      39277
+    ],
+    "key": "available_export_power",
+    "name": "Available Export Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39276,
+      39275
+    ],
+    "key": "available_import_power",
+    "name": "Available Import Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       31022
     ],
     "key": "battery_charge",
@@ -183,6 +205,171 @@
   },
   {
     "addresses": [
+      38931,
+      38930
+    ],
+    "key": "ct2_meter_apparent",
+    "name": "CT2 Meter Apparent",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38933,
+      38932
+    ],
+    "key": "ct2_meter_apparent_r",
+    "name": "CT2 Meter Apparent R",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38935,
+      38934
+    ],
+    "key": "ct2_meter_apparent_s",
+    "name": "CT2 Meter Apparent S",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38937,
+      38936
+    ],
+    "key": "ct2_meter_apparent_t",
+    "name": "CT2 Meter Apparent T",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38947,
+      38946
+    ],
+    "key": "ct2_meter_frequency",
+    "name": "CT2 Meter Frequency",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38939,
+      38938
+    ],
+    "key": "ct2_meter_pf",
+    "name": "CT2 Meter Power Factor",
+    "scale": 1e-05,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38941,
+      38940
+    ],
+    "key": "ct2_meter_pf_r",
+    "name": "CT2 Meter Power Factor R",
+    "scale": 1e-05,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38943,
+      38942
+    ],
+    "key": "ct2_meter_pf_s",
+    "name": "CT2 Meter Power Factor S",
+    "scale": 1e-05,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38945,
+      38944
+    ],
+    "key": "ct2_meter_pf_t",
+    "name": "CT2 Meter Power Factor T",
+    "scale": 1e-05,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38923,
+      38922
+    ],
+    "key": "ct2_meter_reactive",
+    "name": "CT2 Meter Reactive",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38925,
+      38924
+    ],
+    "key": "ct2_meter_reactive_r",
+    "name": "CT2 Meter Reactive R",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38927,
+      38926
+    ],
+    "key": "ct2_meter_reactive_s",
+    "name": "CT2 Meter Reactive S",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38929,
+      38928
+    ],
+    "key": "ct2_meter_reactive_t",
+    "name": "CT2 Meter Reactive T",
+    "scale": 0.0001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39150,
+      39149
+    ],
+    "key": "cumulative_power_generation",
+    "name": "Cumulative Power Generation",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39163,
+      39162
+    ],
+    "key": "energy_storage_module_1_power",
+    "name": "Energy Storage Module 1 Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       31013
     ],
     "key": "eps_frequency",
@@ -220,6 +407,46 @@
     "scale": 0.1,
     "signed": false,
     "type": "sensor"
+  },
+  {
+    "addresses": [
+      46619
+    ],
+    "key": "export_current_limit",
+    "name": "Export Current Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46619
+    ],
+    "key": "export_current_limit",
+    "name": "Export Current Limit",
+    "scale": null,
+    "type": "number"
+  },
+  {
+    "addresses": [
+      46505,
+      46504
+    ],
+    "key": "export_peak_limit",
+    "name": "Export Peak Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46505,
+      46504
+    ],
+    "key": "export_peak_limit",
+    "name": "Export Peak Limit",
+    "scale": null,
+    "type": "number"
   },
   {
     "addresses": [
@@ -319,6 +546,35 @@
   },
   {
     "addresses": [
+      39138
+    ],
+    "key": "grid_power_factor",
+    "name": "Grid Power Factor",
+    "scale": 0.001,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46618
+    ],
+    "key": "import_current_limit",
+    "name": "Import Current Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46618
+    ],
+    "key": "import_current_limit",
+    "name": "Import Current Limit",
+    "scale": null,
+    "type": "number"
+  },
+  {
+    "addresses": [
       46502,
       46501
     ],
@@ -356,6 +612,47 @@
     "key": "input_energy_total",
     "name": "Input Energy Total",
     "scale": 0.1,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39271,
+      39270
+    ],
+    "key": "inv_combined_apparent_power",
+    "name": "Inverter Combined Apparent Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39272
+    ],
+    "key": "inv_frequency_r",
+    "name": "Inverter Frequency R",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39273
+    ],
+    "key": "inv_frequency_s",
+    "name": "Inverter Frequency S",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39274
+    ],
+    "key": "inv_frequency_t",
+    "name": "Inverter Frequency T",
+    "scale": 0.01,
     "signed": false,
     "type": "sensor"
   },
@@ -533,6 +830,28 @@
   },
   {
     "addresses": [
+      39056,
+      39055
+    ],
+    "key": "max_active_power",
+    "name": "Maximum Active Power (Pmax)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39058,
+      39057
+    ],
+    "key": "max_apparent_power",
+    "name": "Maximum Apparent Power (Smax)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       41007
     ],
     "key": "max_charge_current",
@@ -571,6 +890,28 @@
   },
   {
     "addresses": [
+      39060,
+      39059
+    ],
+    "key": "max_reactive_power_export",
+    "name": "Maximum Reactive Power (Export)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39062,
+      39061
+    ],
+    "key": "max_reactive_power_import",
+    "name": "Maximum Reactive Power (Import)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       41010
     ],
     "key": "max_soc",
@@ -587,6 +928,158 @@
     "name": "Max SoC",
     "scale": null,
     "type": "number"
+  },
+  {
+    "addresses": [
+      38801
+    ],
+    "key": "meter1_ct1_connect_state",
+    "name": "Meter1/CT1 Connect State",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38809,
+      38808
+    ],
+    "key": "meter1_ct1_current_r",
+    "name": "Meter1/CT1 Current R",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38811,
+      38810
+    ],
+    "key": "meter1_ct1_current_s",
+    "name": "Meter1/CT1 Current S",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38813,
+      38812
+    ],
+    "key": "meter1_ct1_current_t",
+    "name": "Meter1/CT1 Current T",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38803,
+      38802
+    ],
+    "key": "meter1_ct1_voltage_r",
+    "name": "Meter1/CT1 Voltage R",
+    "scale": 0.1,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38805,
+      38804
+    ],
+    "key": "meter1_ct1_voltage_s",
+    "name": "Meter1/CT1 Voltage S",
+    "scale": 0.1,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38807,
+      38806
+    ],
+    "key": "meter1_ct1_voltage_t",
+    "name": "Meter1/CT1 Voltage T",
+    "scale": 0.1,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38901
+    ],
+    "key": "meter2_ct2_connect_state",
+    "name": "Meter2/CT2 Connect State",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38909,
+      38908
+    ],
+    "key": "meter2_ct2_current_r",
+    "name": "Meter2/CT2 Current R",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38911,
+      38910
+    ],
+    "key": "meter2_ct2_current_s",
+    "name": "Meter2/CT2 Current S",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38913,
+      38912
+    ],
+    "key": "meter2_ct2_current_t",
+    "name": "Meter2/CT2 Current T",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38903,
+      38902
+    ],
+    "key": "meter2_ct2_voltage_r",
+    "name": "Meter2/CT2 Voltage R",
+    "scale": 0.1,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38905,
+      38904
+    ],
+    "key": "meter2_ct2_voltage_s",
+    "name": "Meter2/CT2 Voltage S",
+    "scale": 0.1,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      38907,
+      38906
+    ],
+    "key": "meter2_ct2_voltage_t",
+    "name": "Meter2/CT2 Voltage T",
+    "scale": 0.1,
+    "signed": true,
+    "type": "sensor"
   },
   {
     "addresses": [
@@ -625,6 +1118,151 @@
     "name": "Min SoC (On Grid)",
     "scale": null,
     "type": "number"
+  },
+  {
+    "addresses": [
+      39050
+    ],
+    "key": "model_id",
+    "name": "Model ID",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39328
+    ],
+    "key": "mppt1_current",
+    "name": "MPPT1 Current",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39330,
+      39329
+    ],
+    "key": "mppt1_power",
+    "name": "MPPT1 Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39327
+    ],
+    "key": "mppt1_voltage",
+    "name": "MPPT1 Voltage",
+    "scale": 0.1,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39332
+    ],
+    "key": "mppt2_current",
+    "name": "MPPT2 Current",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39334,
+      39333
+    ],
+    "key": "mppt2_power",
+    "name": "MPPT2 Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39331
+    ],
+    "key": "mppt2_voltage",
+    "name": "MPPT2 Voltage",
+    "scale": 0.1,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39336
+    ],
+    "key": "mppt3_current",
+    "name": "MPPT3 Current",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39338,
+      39337
+    ],
+    "key": "mppt3_power",
+    "name": "MPPT3 Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39335
+    ],
+    "key": "mppt3_voltage",
+    "name": "MPPT3 Voltage",
+    "scale": 0.1,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39052
+    ],
+    "key": "number_of_mppts",
+    "name": "Number of MPPTs",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39051
+    ],
+    "key": "number_of_strings",
+    "name": "Number of Strings",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39152,
+      39151
+    ],
+    "key": "power_generation_today",
+    "name": "Power Generation Today",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39001,
+      39000
+    ],
+    "key": "protocol_version_raw",
+    "name": "Protocol Version (Raw)",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
   },
   {
     "addresses": [
@@ -783,6 +1421,17 @@
     "type": "sensor"
   },
   {
+    "addresses": [
+      39119,
+      39118
+    ],
+    "key": "pv_input_power_total",
+    "name": "PV Input Power Total",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
     "key": "pv_power_now",
     "name": "PV Power",
     "sources": [
@@ -792,6 +1441,17 @@
       "pv4_power"
     ],
     "type": "lambda"
+  },
+  {
+    "addresses": [
+      39054,
+      39053
+    ],
+    "key": "rated_power",
+    "name": "Rated Power (Pn)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
   },
   {
     "addresses": [
@@ -862,6 +1522,25 @@
     "scale": 0.1,
     "signed": false,
     "type": "sensor"
+  },
+  {
+    "addresses": [
+      46503
+    ],
+    "key": "threshold_soc",
+    "name": "Threshold SoC",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46503
+    ],
+    "key": "threshold_soc",
+    "name": "Threshold SoC",
+    "scale": null,
+    "type": "number"
   },
   {
     "addresses": [

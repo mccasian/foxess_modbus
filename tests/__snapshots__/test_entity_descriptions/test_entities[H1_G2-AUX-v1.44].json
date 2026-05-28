@@ -11,6 +11,28 @@
   },
   {
     "addresses": [
+      39278,
+      39277
+    ],
+    "key": "available_export_power",
+    "name": "Available Export Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39276,
+      39275
+    ],
+    "key": "available_import_power",
+    "name": "Available Import Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       31022
     ],
     "key": "battery_charge",
@@ -133,6 +155,28 @@
   },
   {
     "addresses": [
+      39150,
+      39149
+    ],
+    "key": "cumulative_power_generation",
+    "name": "Cumulative Power Generation",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39163,
+      39162
+    ],
+    "key": "energy_storage_module_1_power",
+    "name": "Energy Storage Module 1 Power",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       31013
     ],
     "key": "eps_frequency",
@@ -170,6 +214,67 @@
     "scale": 0.1,
     "signed": false,
     "type": "sensor"
+  },
+  {
+    "addresses": [
+      46619
+    ],
+    "key": "export_current_limit",
+    "name": "Export Current Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46619
+    ],
+    "key": "export_current_limit",
+    "name": "Export Current Limit",
+    "scale": null,
+    "type": "number"
+  },
+  {
+    "addresses": [
+      46505,
+      46504
+    ],
+    "key": "export_peak_limit",
+    "name": "Export Peak Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46505,
+      46504
+    ],
+    "key": "export_peak_limit",
+    "name": "Export Peak Limit",
+    "scale": null,
+    "type": "number"
+  },
+  {
+    "addresses": [
+      46617,
+      46616
+    ],
+    "key": "export_power_limit",
+    "name": "Export Power Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46617,
+      46616
+    ],
+    "key": "export_power_limit",
+    "name": "Export Power Limit",
+    "scale": null,
+    "type": "number"
   },
   {
     "addresses": [
@@ -242,6 +347,56 @@
     "scale": 0.001,
     "signed": true,
     "type": "sensor"
+  },
+  {
+    "addresses": [
+      39138
+    ],
+    "key": "grid_power_factor",
+    "name": "Grid Power Factor",
+    "scale": 0.001,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46618
+    ],
+    "key": "import_current_limit",
+    "name": "Import Current Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46618
+    ],
+    "key": "import_current_limit",
+    "name": "Import Current Limit",
+    "scale": null,
+    "type": "number"
+  },
+  {
+    "addresses": [
+      46502,
+      46501
+    ],
+    "key": "import_power_limit",
+    "name": "Import Power Limit",
+    "scale": null,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46502,
+      46501
+    ],
+    "key": "import_power_limit",
+    "name": "Import Power Limit",
+    "scale": null,
+    "type": "number"
   },
   {
     "addresses": [
@@ -364,6 +519,28 @@
   },
   {
     "addresses": [
+      39056,
+      39055
+    ],
+    "key": "max_active_power",
+    "name": "Maximum Active Power (Pmax)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39058,
+      39057
+    ],
+    "key": "max_apparent_power",
+    "name": "Maximum Apparent Power (Smax)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
       41007
     ],
     "key": "max_charge_current",
@@ -399,6 +576,28 @@
     "name": "Max Discharge Current",
     "scale": 0.1,
     "type": "number"
+  },
+  {
+    "addresses": [
+      39060,
+      39059
+    ],
+    "key": "max_reactive_power_export",
+    "name": "Maximum Reactive Power (Export)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39062,
+      39061
+    ],
+    "key": "max_reactive_power_import",
+    "name": "Maximum Reactive Power (Import)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
   },
   {
     "addresses": [
@@ -456,6 +655,58 @@
     "name": "Min SoC (On Grid)",
     "scale": null,
     "type": "number"
+  },
+  {
+    "addresses": [
+      39050
+    ],
+    "key": "model_id",
+    "name": "Model ID",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39052
+    ],
+    "key": "number_of_mppts",
+    "name": "Number of MPPTs",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39051
+    ],
+    "key": "number_of_strings",
+    "name": "Number of Strings",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39152,
+      39151
+    ],
+    "key": "power_generation_today",
+    "name": "Power Generation Today",
+    "scale": 0.01,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      39001,
+      39000
+    ],
+    "key": "protocol_version_raw",
+    "name": "Protocol Version (Raw)",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
   },
   {
     "addresses": [
@@ -534,6 +785,17 @@
     "type": "sensor"
   },
   {
+    "addresses": [
+      39119,
+      39118
+    ],
+    "key": "pv_input_power_total",
+    "name": "PV Input Power Total",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
+  },
+  {
     "key": "pv_power_now",
     "name": "PV Power",
     "sources": [
@@ -541,6 +803,17 @@
       "pv2_power"
     ],
     "type": "lambda"
+  },
+  {
+    "addresses": [
+      39054,
+      39053
+    ],
+    "key": "rated_power",
+    "name": "Rated Power (Pn)",
+    "scale": 0.001,
+    "signed": true,
+    "type": "sensor"
   },
   {
     "addresses": [
@@ -611,6 +884,25 @@
     "scale": 0.1,
     "signed": false,
     "type": "sensor"
+  },
+  {
+    "addresses": [
+      46503
+    ],
+    "key": "threshold_soc",
+    "name": "Threshold SoC",
+    "scale": null,
+    "signed": false,
+    "type": "sensor"
+  },
+  {
+    "addresses": [
+      46503
+    ],
+    "key": "threshold_soc",
+    "name": "Threshold SoC",
+    "scale": null,
+    "type": "number"
   },
   {
     "addresses": [
